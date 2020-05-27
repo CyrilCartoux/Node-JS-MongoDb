@@ -25,7 +25,6 @@ class Product {
     }
     return dbOperation
       .then(result => {
-        console.log(result)
       })
       .catch(err => {
         console.log(err)
@@ -54,7 +53,6 @@ class Product {
       // next to get the last document returned by find()
       .next()
       .then(product => {
-        console.log(product);
         return product;
       })
       .catch(err => {
