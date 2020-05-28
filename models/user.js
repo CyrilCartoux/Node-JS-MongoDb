@@ -14,12 +14,27 @@ class User {
   }
 
   addToCart(product) {
-    // const cartProduct = this.cart.items.findIndex(cp => {
-    //   return cp._id === product._id;
-    // });
+    // item already exists
+    const cartProductIndex = this.cart.items.findIndex(cp => {
+      return cp.productId.toString() === product._id.toString();
+    });
+    let newQuantity = 1;
+    const updatedCartItems = [...this.cart.items]
+
+    if (cartProductIndex >= 0) {
+      newQuantity = this.cart.items[cartProductIndex].quantity + 1;
+      // update the qty of the existing one
+      updatedCartItems[cartProductIndex].quantity = newQuantity
+    } else {
+      // or update the new one
+      updatedCartItems.push({
+        productId: mongodb.ObjectId(product._id),
+        quantity: newQuantity
+      })
+    }
 
     // no products in the cart 
-    const updatedCart = { items: [{ ...product, quantity: 1 }] }
+    const updatedCart = { items: updatedCartItems }
     const db = getDb();
     console.log(this._id)
     console.log(mongodb.ObjectId(this._id))
