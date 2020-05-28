@@ -113,7 +113,7 @@ class User {
     return db.collection("orders")
     // we can access nested data here :
     .find({'user._id': mongodb.ObjectId(this._id)})
-    .toArray()
+    .toArray() 
   }
 
 }
