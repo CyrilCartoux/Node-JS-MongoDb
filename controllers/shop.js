@@ -46,23 +46,19 @@ exports.getIndex = (req, res, next) => {
 };
 
 // // go to cart via nav
-// exports.getCart = (req, res, next) => {
-//   req.user
-//     .getCart()
-//     .then(cart => {
-//       return cart
-//         .getProducts()
-//         .then(products => {
-//           res.render('shop/cart', {
-//             path: '/cart',
-//             pageTitle: 'Your Cart',
-//             products: products
-//           });
-//         })
-//         .catch(err => console.log(err));
-//     })
-//     .catch(err => console.log(err));
-// };
+exports.getCart = (req, res, next) => {
+  console.log('get cart called')
+  req.user.getCart()
+    .then(products => {
+      console.log(products)
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products: products
+      });
+    })
+    .catch(err => console.log(err));
+}        
 
 // add a product to cart when 'add to cart' clicked
 exports.postCart = (req, res, next) => {
@@ -70,7 +66,7 @@ exports.postCart = (req, res, next) => {
   Product.findById(prodId).then(product => {
     return req.user.addToCart(product)
   }).then(result => {
-    console.log(result)
+    res.redirect('/cart');
   })
   // let fetchedCart;
   // let newQuantity = 1;
